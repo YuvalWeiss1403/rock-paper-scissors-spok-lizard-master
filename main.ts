@@ -2,11 +2,6 @@
 const rulesButton = document.getElementById('rules-button') as HTMLButtonElement | null;
 const rulesModal = document.getElementById('rules-modal') as HTMLDivElement | null;
 const modalCloseButton = document.getElementById('close-button') as HTMLElement | null;
-const rockButton = document.getElementById('rock-button') as HTMLButtonElement | null;
-const paperButton = document.getElementById('paper-button') as HTMLButtonElement | null;
-const scissorsButton = document.getElementById('scissors-button') as HTMLButtonElement | null;
-const spockButton = document.getElementById('spock-button') as HTMLButtonElement | null;
-const lizardButton = document.getElementById('lizard-button') as HTMLButtonElement | null;
 const step1Container = document.getElementById('step-one') as HTMLDivElement | null;
 const step2Container = document.getElementById('step-two') as HTMLDivElement | null;
 const waitForHousePicked =document.getElementById('wait-for-house-picked') as HTMLDivElement | null;
@@ -29,6 +24,15 @@ enum gameOptions{
     lizard = 'lizard',
     spock ='spock'
 }
+
+// creating an object that the key represent an options and the value represents who it can win 
+const WinnerORLoser:object ={
+    rock:["scissors","lizard"],
+    paper:["rock","spock"],
+    scissors: ["paper","lizard"],
+    lizard: ["spock","paper"],
+    spock: ["scissors","rock"]
+};
 
 // generate a random option from enums properties
 function randomHomePlayer(): string {
@@ -61,22 +65,13 @@ window.onclick = function(event) {
 }
 
 // calling the iconStepOneClicked function to create a game between user and the computer 
-// and displaying result on screen
-rockButton?.addEventListener('click',()=>{
-    iconStepOneClicked(`rock`);
-});
-paperButton?.addEventListener('click',()=>{
-    iconStepOneClicked(`paper`);
-});
-scissorsButton?.addEventListener('click',()=>{
-    iconStepOneClicked(`scissors`);
-});
-lizardButton?.addEventListener('click',()=>{
-    iconStepOneClicked(`lizard`);
-});
-spockButton?.addEventListener('click',()=>{
-    iconStepOneClicked(`spock`);
-});
+// and displaying result on 
+for(const key of Object.keys(WinnerORLoser)){
+    const button = document.getElementById(`${key}-button`) as HTMLButtonElement | null;
+    button?.addEventListener('click',()=>{
+        iconStepOneClicked(`${key}`);
+    });
+}
 
 // reloading the page when user wants to play again
 playAgain?.addEventListener('click',()=>{
@@ -130,16 +125,6 @@ function addHousePickedIcon(icon:String):void{
     pickedButton.appendChild(imgInButton);
     youPickedContainer?.appendChild(pickedButton);
 }
-
-
-// creating an object that the key represent an options and the value represents who it can win 
-const WinnerORLoser:object ={
-    rock:["scissors","lizard"],
-    paper:["rock","spock"],
-    scissors: ["paper","lizard"],
-    lizard: ["spock","paper"],
-    spock: ["scissors","rock"]
-};
 
 // check and update score 
 function whoWon(youPicked:String,housePicked:String):void{

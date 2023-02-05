@@ -2,11 +2,6 @@
 var rulesButton = document.getElementById('rules-button');
 var rulesModal = document.getElementById('rules-modal');
 var modalCloseButton = document.getElementById('close-button');
-var rockButton = document.getElementById('rock-button');
-var paperButton = document.getElementById('paper-button');
-var scissorsButton = document.getElementById('scissors-button');
-var spockButton = document.getElementById('spock-button');
-var lizardButton = document.getElementById('lizard-button');
 var step1Container = document.getElementById('step-one');
 var step2Container = document.getElementById('step-two');
 var waitForHousePicked = document.getElementById('wait-for-house-picked');
@@ -26,6 +21,14 @@ var gameOptions;
     gameOptions["lizard"] = "lizard";
     gameOptions["spock"] = "spock";
 })(gameOptions || (gameOptions = {}));
+// creating an object that the key represent an options and the value represents who it can win 
+var WinnerORLoser = {
+    rock: ["scissors", "lizard"],
+    paper: ["rock", "spock"],
+    scissors: ["paper", "lizard"],
+    lizard: ["spock", "paper"],
+    spock: ["scissors", "rock"]
+};
 // generate a random option from enums properties
 function randomHomePlayer() {
     var index = Math.floor(Math.random() * Object.keys(gameOptions).length);
@@ -50,23 +53,18 @@ window.onclick = function (event) {
         rulesModal.style.display = "none";
     }
 };
+var _loop_1 = function (key) {
+    var button = document.getElementById("".concat(key, "-button"));
+    button === null || button === void 0 ? void 0 : button.addEventListener('click', function () {
+        iconStepOneClicked("".concat(key));
+    });
+};
 // calling the iconStepOneClicked function to create a game between user and the computer 
-// and displaying result on screen
-rockButton === null || rockButton === void 0 ? void 0 : rockButton.addEventListener('click', function () {
-    iconStepOneClicked("rock");
-});
-paperButton === null || paperButton === void 0 ? void 0 : paperButton.addEventListener('click', function () {
-    iconStepOneClicked("paper");
-});
-scissorsButton === null || scissorsButton === void 0 ? void 0 : scissorsButton.addEventListener('click', function () {
-    iconStepOneClicked("scissors");
-});
-lizardButton === null || lizardButton === void 0 ? void 0 : lizardButton.addEventListener('click', function () {
-    iconStepOneClicked("lizard");
-});
-spockButton === null || spockButton === void 0 ? void 0 : spockButton.addEventListener('click', function () {
-    iconStepOneClicked("spock");
-});
+// and displaying result on 
+for (var _i = 0, _a = Object.keys(WinnerORLoser); _i < _a.length; _i++) {
+    var key = _a[_i];
+    _loop_1(key);
+}
 // reloading the page when user wants to play again
 playAgain === null || playAgain === void 0 ? void 0 : playAgain.addEventListener('click', function () {
     window.location.reload();
@@ -113,14 +111,6 @@ function addHousePickedIcon(icon) {
     pickedButton.appendChild(imgInButton);
     youPickedContainer === null || youPickedContainer === void 0 ? void 0 : youPickedContainer.appendChild(pickedButton);
 }
-// creating an object that the key represent an options and the value represents who it can win 
-var WinnerORLoser = {
-    rock: ["scissors", "lizard"],
-    paper: ["rock", "spock"],
-    scissors: ["paper", "lizard"],
-    lizard: ["spock", "paper"],
-    spock: ["scissors", "rock"]
-};
 // check and update score 
 function whoWon(youPicked, housePicked) {
     //getting the value of the current score
