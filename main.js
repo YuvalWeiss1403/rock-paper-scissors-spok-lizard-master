@@ -61,7 +61,7 @@ var _loop_1 = function (key) {
 };
 // calling the iconStepOneClicked function to create a game between user and the computer 
 // and displaying result on 
-for (var _i = 0, _a = Object.keys(WinnerORLoser); _i < _a.length; _i++) {
+for (var _i = 0, _a = Object.keys(gameOptions); _i < _a.length; _i++) {
     var key = _a[_i];
     _loop_1(key);
 }
@@ -122,7 +122,7 @@ function whoWon(youPicked, housePicked) {
             whoWonMessage.innerHTML = "IT'S A TIE";
             // comparing between WinnerORLoser objects to the elements in the game
         }
-        else if (WinnerORLoser["".concat(youPicked)] == housePicked) {
+        else if (WinnerORLoser["".concat(youPicked)].includes(housePicked)) {
             whoWonMessage.innerHTML = "YOU WIN";
             currentScore++;
         }

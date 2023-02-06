@@ -66,7 +66,7 @@ window.onclick = function(event) {
 
 // calling the iconStepOneClicked function to create a game between user and the computer 
 // and displaying result on 
-for(const key of Object.keys(WinnerORLoser)){
+for(const key of Object.keys(gameOptions)){
     const button = document.getElementById(`${key}-button`) as HTMLButtonElement | null;
     button?.addEventListener('click',()=>{
         iconStepOneClicked(`${key}`);
@@ -137,7 +137,7 @@ function whoWon(youPicked:String,housePicked:String):void{
     if(youPicked === housePicked){
         whoWonMessage.innerHTML = "IT'S A TIE";
     // comparing between WinnerORLoser objects to the elements in the game
-    }else if(WinnerORLoser[`${youPicked}`]==housePicked){
+    }else if(WinnerORLoser[`${youPicked}`].includes(housePicked) ){
         whoWonMessage.innerHTML = "YOU WIN";
         currentScore++;
     }else{
